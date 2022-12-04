@@ -1,12 +1,13 @@
 library(tidyverse)
 library(babynames)
 
+# load current contributed packages
 curr_pkgs <- read_delim("data/curr_contr.txt", delim = "\t", na = "-")
 
 # show different file types
 table(curr_pkgs$Icon)
 
-# remove 
+# remove directories and textfiles and add package name and version
 curr_pkgs <- curr_pkgs |>
   filter(Icon == "[   ]") |>
   rename(File=Name) |>
@@ -18,4 +19,11 @@ curr_pkgs <- curr_pkgs |>
 curr_pkgs
 
 
+eb_text <- read_lines("data/R-4.2.1-foss-2022a.eb", skip = 96)
 
+eb_pkgs <- tibble(text=eb_text)
+
+eb_pkgs
+
+eb_pkgs |> 
+  mutate(Name_Version=str_extract(text, "(?<=    ((').*(?=', {{))"))
