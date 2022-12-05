@@ -42,7 +42,7 @@ set.seed(1410)
 tibble(name = c(wakefield::name(3), NA)) |>
 mutate(greeting = str_c("Hi ", name, "!"))
 
-
+# requires tidyr-1.3
 tibble(x = c("a,b,c", "d,e", "f")) |> 
   separate_longer_delim(x, delim = ",")
 
