@@ -17,7 +17,9 @@ curr_pkgs <- curr_pkgs |>
   select(Name, Version, File, Last_modified, Size) |> 
   arrange(Name, Version)
 
-curr_pkgs
+curr_pkgs <- curr_pkgs |> 
+  rename(curr_Version=Version)
+
 
 curr_pkgs |> 
   group_by(Name) |> 
@@ -33,10 +35,16 @@ eb_pkgs <- eb_pkgs |>
   mutate(Name_Version=str_extract(text, "(?<=    \\(').*(?=', \\{)")) |> 
   select(Name_Version) |> 
   filter(!is.na(Name_Version)) |> 
-  separate(Name_Version, into = c("Name", "Version"), sep = "', '") |> 
-  arrange(Name, Version)
+  separate(Name_Version, into = c("Name", "eb_Version"), sep = "', '") |> 
+  arrange(Name, eb_Version)
 
-eb_pkgs
+eb_pkgs |> 
+  left_join(curr_pkgs, by = "Name") |> 
+  filter(eb_Version!=curr_Version) |> 
+  group_by(Name) |> 
+  filter(n()>1) |> 
+  as.data.frame()
+
 
 
 #####
@@ -49,7 +57,7 @@ eb_pkgs
 
 curr_pkgs <- read_csv("data/curr_cont.txt")
 # remove directories and textfiles and add package name and version
-curr_pkgs |>
+curr_pkgs <- curr_pkgs |>
   separate(Name_Version, into = c("Name", "Version"), sep = "_")
   
   filter(Icon == "[   ]") |>
