@@ -1,5 +1,5 @@
 name = 'R'
-version = '4.2.2'
+version = '4.2.1'
 
 homepage = 'https://www.r-project.org/'
 description = """R is a free software environment for statistical computing
