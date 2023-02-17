@@ -12,7 +12,7 @@ df <- df |>
 
 curr_pkgs <- df |> 
   group_by(Name) |> 
-  filter(File!="qgcomp_2.9.0.tar.gz") |> 
+  #filter(File!="qgcomp_2.9.0.tar.gz") |> 
   mutate(curr_Version=max(Version)) |> 
   filter(Version==curr_Version) |> 
   arrange(Name) |> 
