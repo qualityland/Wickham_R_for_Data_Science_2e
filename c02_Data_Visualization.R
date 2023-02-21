@@ -1,6 +1,15 @@
+# ------------------------------------------------------------------------------
+# 2.1 Introduction
+# ------------------------------------------------------------------------------
+
+# install.packages(c("babynames", "gapminder", "nycflights13", "palmerpenguins"))
 library(tidyverse)
 library(palmerpenguins)
+library(ggthemes)
 
+# ------------------------------------------------------------------------------
+# 2.2 First Steps
+# ------------------------------------------------------------------------------
 
 # 1st look at penguins tibble
 penguins
@@ -58,11 +67,86 @@ ggplot(data = penguins,
   geom_point(mapping = aes(color = species)) +
   geom_smooth()
 
+# additionally to color, also map 'species' to the shape aesthetic
+ggplot(data = penguins,
+       mapping = aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(mapping = aes(color = species, shape = species)) +
+  geom_smooth()
+
+# improve labels and support for colorblind folks
+ggplot(data = penguins,
+       mapping = aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(mapping = aes(color = species, shape = species)) +
+  geom_smooth() +
+  labs(
+    title = "Body mass and flipper length",
+    subtitle = "Dimensions for Adelie, Chinstrap, and Gentoo Penguins",
+    x = "Flipper length (mm)", y = "Body mass (g)",
+    color = "Species", shape = "Species"
+  ) +
+  scale_color_colorblind()
+
+# ------------------------------------------------------------------------------
+# 2.3 ggplot2 Calls
+# ------------------------------------------------------------------------------
+
+# more concise
+ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g)) +
+  geom_point()
+
+# same using pipe (R 4.1+)
+penguins |>
+  ggplot(aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point()
 
 
 
 
+# ------------------------------------------------------------------------------
+# 2.4 Visualizing Distributions
+# ------------------------------------------------------------------------------
 
+# 2.4.1 Categorical Variables
+# ---------------------------
+
+# distribution of species
+ggplot(penguins, aes(x=species)) +
+  geom_bar()
+
+# ordered by frequencies
+ggplot(penguins, aes(x=fct_infreq(species))) +
+  geom_bar()
+
+
+# 2.4.2 Numerical Variables
+# -------------------------
+
+# barplot
+ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram(binwidth = 200)
+
+# density plot
+ggplot(penguins, aes(x = body_mass_g)) +
+  geom_density()
+
+# ------------------------------------------------------------------------------
+# 2.5 Visualizing Relationships
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+# 2.6 Saving your Plots
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+# 2.7 Common Problems
+# ------------------------------------------------------------------------------
+
+
+
+
+# ------------------------------------------------------------------------------
+# Bullshit and Try-outs
+# ------------------------------------------------------------------------------
 
 # flipper length vs body mass
 ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g)) +
@@ -73,3 +157,18 @@ ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g)) +
     subtitle = "Dimensions for Adelie, Chinstrap and Geentoo Penguins",
     x = "Flipper length (mm)",
     y = "Body mass (g)")
+
+
+
+
+# mpg data
+ggplot(data = mpg, mapping= aes(x = displ, y = hwy, color = class)) +
+  geom_point()
+
+
+
+
+
+ggplot(data = penguins, mapping = aes(x=flipper_length_mm, y=body_mass_g)) +
+  geom_point(aes(color = species)) +
+  geom_smooth()
