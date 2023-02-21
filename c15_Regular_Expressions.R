@@ -1,5 +1,5 @@
 library(tidyverse)
-library(babynames)
+#library(babynames)
 
 
 cmd <- r"(curl -s https://cran.r-project.org/src/contrib/ | grep -o 'href=".*">'  | sed -e "s/href=\"//g" | sed -e "s/\"\>/,/g" |grep ".tar.gz"  | sed -e "s/\.tar\.gz<\/a><\/td>.*//g")"
@@ -52,10 +52,12 @@ for(i in seq_along(few_dests)){
 }
 
 
+sha_sums <- readr::read_csv("data/shasums.csv")
 
+curr_eb_pkgs <- new_eb_pkgs |>
+  left_join(sha_sums, by = "File")
 
-
-
+readr::write_csv(curr_eb_pkgs, "data/curr_eb_pkgs_2023-02-17.csv")
 
 
 
