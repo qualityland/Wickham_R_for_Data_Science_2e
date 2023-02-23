@@ -133,6 +133,51 @@ ggplot(penguins, aes(x = body_mass_g)) +
 # 2.5 Visualizing Relationships
 # ------------------------------------------------------------------------------
 
+
+# 2.5.1 A Numerical and a Categorical Variable
+# --------------------------------------------
+
+# boxplot
+ggplot(penguins, aes(x = species, y = body_mass_g)) +
+  geom_boxplot()
+
+# frequency polygon
+ggplot(penguins, aes(x = body_mass_g, color = species)) +
+  geom_freqpoly(binwidth = 200, linewidth = .75)
+
+
+# density plot
+ggplot(penguins, aes(x = body_mass_g, color = species, fill = species) ) +
+  geom_density(alpha = 0.5)
+
+
+# 2.5.2 Two Categorical Variables
+# -------------------------------
+
+# barplot
+ggplot(penguins, aes(x = island, fill = species)) +
+  geom_bar()
+
+# barplot with relative proportions
+ggplot(penguins, aes(x = island, fill = species)) +
+  geom_bar(position = "fill")
+
+
+# 2.5.3 Two Numerical Variables
+# -----------------------------
+
+# scatter plot
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point()
+
+# 2.5.4 Three or more Variables
+# -----------------------------
+
+# scatter plot with color and shape
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = species, shape = island))
+
+
 # ------------------------------------------------------------------------------
 # 2.6 Saving your Plots
 # ------------------------------------------------------------------------------
