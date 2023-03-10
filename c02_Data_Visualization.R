@@ -246,9 +246,50 @@ ggplot(penguins, aes(x=fct_infreq(species))) +
 ggplot(penguins, aes(x = body_mass_g)) +
   geom_histogram(binwidth = 200)
 
+
+# different binwidths
+ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram(binwidth = 20)
+
+ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram(binwidth = 200)
+
+ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram(binwidth = 2000)
+
+
 # density plot
 ggplot(penguins, aes(x = body_mass_g)) +
   geom_density()
+
+
+# 2.4.3 Exercises
+# ---------------
+
+# 1. Make a bar plot of species of penguins, where you assign species to the
+#    y aesthetic. How is this plot different?
+ggplot(penguins, aes(y=species)) + geom_bar()
+# horizontal bar plot
+
+# 2. How are the following two plots different? Which aesthetic, color or fill,
+#    is more useful for changing the color of bars?
+ggplot(penguins, aes(x = species)) +
+  geom_bar(color = "red")
+
+ggplot(penguins, aes(x = species)) +
+  geom_bar(fill = "red")
+# fill is more useful
+
+# 3. What does the bins argument in geom_histogram() do?
+# defines number of bins (default: 30)
+
+# 4. Make a histogram of the carat variable in the diamonds dataset that is
+#    available when you load the tidyverse package. Experiment with different
+#    binwidths. What binwidth reveals the most interesting patterns?
+ggplot(diamonds, aes(carat)) + geom_histogram(binwidth = .01)
+# seems like diamond cutters try to reach carat of
+# 0.5, 1.0, 1.25, 1.5, 2.0 etc
+
 
 # ------------------------------------------------------------------------------
 # 2.5 Visualizing Relationships
