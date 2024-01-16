@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------------
-# 2.1 Introduction
+# 1.1 Introduction
 # ------------------------------------------------------------------------------
 
 # install.packages(c("babynames", "gapminder", "nycflights13", "palmerpenguins"))
@@ -8,11 +8,11 @@ library(palmerpenguins)
 library(ggthemes)
 
 # ------------------------------------------------------------------------------
-# 2.2 First Steps
+# 1.2 First Steps
 # ------------------------------------------------------------------------------
 
 
-# 2.2.1 The Penguins Data Frame
+# 1.2.1 The Penguins Data Frame
 # -----------------------------
 
 # 1st look at penguins tibble
@@ -25,7 +25,7 @@ str(penguins)
 # --------------------------------------------------------------------------------------------------
 
 
-# 2.2.3 Creating a ggplot
+# 1.2.3 Creating a ggplot
 # -----------------------
 
 # Plot Object
@@ -62,7 +62,7 @@ colSums(is.na(penguins))
 summary(penguins)
 
 
-# 2.2.4 Adding Aesthetics and Layers
+# 1.2.4 Adding Aesthetics and Layers
 # ----------------------------------
 
 # add color as a 3rd variable
@@ -103,7 +103,7 @@ ggplot(data = penguins,
   scale_color_colorblind()
 
 
-# 2.2.5 Exercises
+# 1.2.5 Exercises
 # ---------------
 
 # 1. How many rows are in penguins? How many columns?
@@ -210,7 +210,7 @@ ggplot() +
 
 
 # ------------------------------------------------------------------------------
-# 2.3 ggplot2 Calls
+# 1.3 ggplot2 Calls
 # ------------------------------------------------------------------------------
 
 # more concise
@@ -224,10 +224,10 @@ penguins |>
 
 
 # ------------------------------------------------------------------------------
-# 2.4 Visualizing Distributions
+# 1.4 Visualizing Distributions
 # ------------------------------------------------------------------------------
 
-# 2.4.1 Categorical Variables
+# 1.4.1 Categorical Variables
 # ---------------------------
 
 # distribution of species
@@ -239,7 +239,7 @@ ggplot(penguins, aes(x=fct_infreq(species))) +
   geom_bar()
 
 
-# 2.4.2 Numerical Variables
+# 1.4.2 Numerical Variables
 # -------------------------
 
 # barplot
@@ -263,7 +263,7 @@ ggplot(penguins, aes(x = body_mass_g)) +
   geom_density()
 
 
-# 2.4.3 Exercises
+# 1.4.3 Exercises
 # ---------------
 
 # 1. Make a bar plot of species of penguins, where you assign species to the
@@ -292,11 +292,11 @@ ggplot(diamonds, aes(carat)) + geom_histogram(binwidth = .01)
 
 
 # ------------------------------------------------------------------------------
-# 2.5 Visualizing Relationships
+# 1.5 Visualizing Relationships
 # ------------------------------------------------------------------------------
 
 
-# 2.5.1 A Numerical and a Categorical Variable
+# 1.5.1 A Numerical and a Categorical Variable
 # --------------------------------------------
 
 # boxplot
@@ -313,7 +313,7 @@ ggplot(penguins, aes(x = body_mass_g, color = species, fill = species) ) +
   geom_density(alpha = 0.5)
 
 
-# 2.5.2 Two Categorical Variables
+# 1.5.2 Two Categorical Variables
 # -------------------------------
 
 # barplot
@@ -325,14 +325,14 @@ ggplot(penguins, aes(x = island, fill = species)) +
   geom_bar(position = "fill")
 
 
-# 2.5.3 Two Numerical Variables
+# 1.5.3 Two Numerical Variables
 # -----------------------------
 
 # scatter plot
 ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
   geom_point()
 
-# 2.5.4 Three or more Variables
+# 1.5.4 Three or more Variables
 # -----------------------------
 
 # scatter plot with color and shape
@@ -341,11 +341,11 @@ ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
 
 
 # ------------------------------------------------------------------------------
-# 2.6 Saving your Plots
+# 1.6 Saving your Plots
 # ------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
-# 2.7 Common Problems
+# 1.7 Common Problems
 # ------------------------------------------------------------------------------
 
 
