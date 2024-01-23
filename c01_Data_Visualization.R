@@ -1,8 +1,6 @@
 # ------------------------------------------------------------------------------
 # 1.1 Introduction
 # ------------------------------------------------------------------------------
-
-# install.packages(c("babynames", "gapminder", "nycflights13", "palmerpenguins"))
 library(tidyverse)
 library(palmerpenguins)
 library(ggthemes)
@@ -19,7 +17,13 @@ library(ggthemes)
 penguins
 glimpse(penguins)
 str(penguins)
+summary(penguins)
 
+
+# 1.2.2 Ulimate Goal
+# ------------------
+
+# answer following question...
 # --------------------------------------------------------------------------------------------------
 # Question: Do penguins with longer flippers weigh more or less than penguins with shorter flippers?
 # --------------------------------------------------------------------------------------------------
@@ -36,11 +40,7 @@ ggplot(data = penguins)
 
 # Aesthetics Mapping
 
-# map 1st variable from data frame to a visual property (x) of plot
-ggplot(data = penguins,
-       mapping = aes(x = flipper_length_mm))
-
-# map 2nd variable to a visual property (y)
+# map variables to visual/aesthetic properties
 ggplot(data = penguins,
        mapping = aes(x = flipper_length_mm,
                      y = body_mass_g))
@@ -49,12 +49,12 @@ ggplot(data = penguins,
 ggplot(data = penguins,
        mapping = aes(x = flipper_length_mm, y = body_mass_g)) +
   geom_point()
+# WARNING: 2 rows containing NAs
 
 # check for penguins having NA
 # in either flipper length or body mass
 # (see warning message triggered by above plot)
 penguins |>
-  select(species, flipper_length_mm, body_mass_g) |>
   filter(is.na(flipper_length_mm) | is.na(body_mass_g))
 # or
 colSums(is.na(penguins))
@@ -65,7 +65,7 @@ summary(penguins)
 # 1.2.4 Adding Aesthetics and Layers
 # ----------------------------------
 
-# add color as a 3rd variable
+# add color as a 3rd variable (species)
 ggplot(data = penguins,
        mapping = aes(x = flipper_length_mm, y = body_mass_g, color = species)) +
   geom_point()
@@ -79,9 +79,9 @@ ggplot(data = penguins,
 
 # add 2nd geometric object: smooth curve (one for ALL species)
 ggplot(data = penguins,
-       mapping = aes(x = flipper_length_mm, y = body_mass_g)) +
-  geom_point(mapping = aes(color = species)) +
-  geom_smooth()
+       mapping = aes(x = flipper_length_mm, y = body_mass_g)) + # global!
+  geom_point(mapping = aes(color = species)) +  # color mapping is local!
+  geom_smooth(method = "lm")
 
 # additionally to color, also map 'species' to the shape aesthetic
 ggplot(data = penguins,
@@ -206,7 +206,7 @@ ggplot() +
     data = penguins,
     mapping = aes(x = flipper_length_mm, y = body_mass_g)
   )
-# no difference, since all global properties have been copied to both geoms.
+# no difference, since all global properties have been copied to both geoms (local).
 
 
 # ------------------------------------------------------------------------------
@@ -305,11 +305,14 @@ ggplot(penguins, aes(x = species, y = body_mass_g)) +
 
 # frequency polygon
 ggplot(penguins, aes(x = body_mass_g, color = species)) +
-  geom_freqpoly(binwidth = 200, linewidth = .75)
+  geom_freqpoly(binwidth = 200, linewidth = 0.75)
 
 
 # density plot
-ggplot(penguins, aes(x = body_mass_g, color = species, fill = species) ) +
+ggplot(penguins, aes(x = body_mass_g, color = species)) +
+  geom_density(linewidth = 0.75)
+
+ggplot(penguins, aes(x = body_mass_g, color = species, fill = species)) +
   geom_density(alpha = 0.5)
 
 
@@ -338,6 +341,47 @@ ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
 # scatter plot with color and shape
 ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
   geom_point(aes(color = species, shape = island))
+
+# facet by single variable (island)
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = species, shape = species)) +
+  facet_wrap(~island)
+
+# 1.5.5 Exercises
+# ---------------
+
+# 1. The mpg data frame that is bundled with the ggplot2 package contains 234
+#    observations collected by the US Environmental Protection Agency on 38 car
+#    models.
+# a) Which variables in mpg are categorical?
+#.   manufacturer, model, trans, drv, fl, class
+# b) Which variables are numerical?
+#    (Hint: Type ?mpg to read the documentation for the dataset.)
+#    displ, year, cyl, cty, hwy
+# c) How can you see this information when you run mpg?
+#    categorical: chr; numerical: dbl, int
+  
+# 2. Make a scatterplot of hwy vs. displ using the mpg data frame.
+#    Next, map a third, numerical variable to color, then size, then both color
+#    and size, then shape. How do these aesthetics behave differently for
+#    categorical vs. numerical variables?
+ggplot(mpg, aes(displ, hwy, color = year, size = cyl)) +
+  geom_point()
+
+ggplot(mpg, aes(displ, hwy, color = class, size = drv, shape = class)) +
+  geom_point()
+  
+# 3. In the scatterplot of hwy vs. displ, what happens if you map a third
+#    variable to linewidth?
+  
+# 4. What happens if you map the same variable to multiple aesthetics?
+  
+# 5. Make a scatterplot of bill_depth_mm vs. bill_length_mm and color the points
+#    by species. What does adding coloring by species reveal about the
+#    relationship between these two variables? What about faceting by species?
+  
+# 6. Why does the following yield two separate legends? How would you fix it to
+#    combine the two legends?
 
 
 # ------------------------------------------------------------------------------
