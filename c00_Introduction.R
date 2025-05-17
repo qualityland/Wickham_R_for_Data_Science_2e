@@ -20,6 +20,7 @@ install.packages(
     "palmerpenguins",
     "repurrrsive",
     "tidymodels",
+    "tidyverse",
     "writexl"
   )
 )
